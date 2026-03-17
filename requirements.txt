@@ -1,0 +1,40 @@
+# Core dependencies for LHAW (AgentCompany inference/eval with OpenHands)
+litellm>=1.74.0
+anthropic>=0.49.0
+openai>=1.70.0
+python-dotenv>=1.0.0
+boto3>=1.35.0
+
+# Evaluation dependencies
+pandas>=2.2.0
+openpyxl>=3.1.0
+PyPDF2>=3.0.0
+odfpy>=1.4.1
+python-docx>=1.1.0
+python-pptx>=1.0.0
+docx>=0.2.4
+defusedxml>=0.7.1
+scikit-learn>=1.5.0
+
+# ML task dependencies (ml_generate_gradcam, ml_grade_exam)
+torch>=2.0.0
+torchvision>=0.15.0
+opencv-python>=4.11.0
+pillow>=11.0.0
+numpy>=2.0.0
+
+# S3 access (for golden trajectories)
+s3fs>=2024.0.0
+
+# HuggingFace datasets (for MCP-Atlas + SWE-Bench Pro download)
+datasets>=2.14.0
+
+# Synthetic pipeline + scripts
+tqdm>=4.60.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+PyYAML>=6.0
+
+# Retry handling
+tenacity>=8.0.0
+

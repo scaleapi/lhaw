@@ -1,0 +1,14 @@
+{
+  "primary_task": "Navigate to `/inputs/THE OWNCLOUD FOLDER`. Use the content in \"TAC_overview.md\" in the \"Documents\" folder to create a comprehensive employee manual, ensuring that it includes all relevant sections such as company values, code of conduct, operational procedures, employee benefits, and company policies. The final document should be saved as \"Employee_Manual.odt\" in \"/THE OWNCLOUD FOLDER/Documents/Human Resources Team\" folder. This manual is a draft with room for creativity. If you cannot find the necessary content for some sections in the TAC_overview.md document, please feel free to suggest them in the manual.",
+  "underspecified_task": "Navigate to `/inputs/THE OWNCLOUD FOLDER`. Use the content in the \"Documents\" folder to create a comprehensive employee manual, ensuring that it includes all relevant sections such as company values, code of conduct, operational procedures, employee benefits, and company policies. The final document should be saved in \"/THE OWNCLOUD FOLDER/Documents/Human Resources Team\" folder. This manual is a draft with room for creativity. If you cannot find the necessary content for some sections in the source document, please feel free to suggest them in the manual.",
+  "removed_segments": [
+    {
+      "dimension": "goal",
+      "value": "Employee_Manual.odt"
+    },
+    {
+      "dimension": "input",
+      "value": "TAC_overview.md"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "primary_task": "You need to write a new grad software engineer job description. The template is a Markdown file located under the `Documents/Human Resources Team` directory called template.md, and the list of requirement is in a txt file called requirement.txt also under the `Documents/Human Resources Team` directory.\n\n* You need to merge them and create a file called \"job_description.md\" in `/THE OWNCLOUD FOLDER/` folder. Make sure it is a Markdown file.",
+  "underspecified_task": "You need to write a job description. The template is a Markdown file located under the `Documents/Human Resources Team` directory called template.md, and the list of requirement is in a txt file called requirement.txt also under the `Documents/Human Resources Team` directory.\n\n* You need to merge them and create a file called \"job_description.md\" in the folder. Make sure it is a Markdown file.",
+  "removed_segments": [
+    {
+      "dimension": "goal",
+      "value": "new grad software engineer"
+    },
+    {
+      "dimension": "goal",
+      "value": "/THE OWNCLOUD FOLDER/"
+    }
+  ]
+}

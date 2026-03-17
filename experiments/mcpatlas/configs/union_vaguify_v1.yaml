@@ -1,0 +1,28 @@
+# Example Configuration: Union with VAGUIFY severity
+# This configuration generates underspecified variants using VAGUIFY severity
+# for tasks that passed on ANY of the baseline models
+
+dataset:
+  name: "union_vaguify_v1"
+  description: "VAGUIFY severity on union tasks (passed by any model)"
+
+baseline:
+  data_dir: "full_inference_data"
+  model_patterns:
+    claude: "*claude-opus-4-5-20251101*"
+    gemini: "*gemini-3-pro-preview*"
+    gpt: "*gpt-5.2*"
+  pass_threshold: 0.75
+  aggregation_strategy: "union"
+
+underspec:
+  severity: "VAGUIFY"
+  top_k: null
+  variant_top_k: 1
+  min_level: 1
+  max_level: 1
+  extraction_model: "gemini/gemini-3-flash-preview"
+  generation_model: "gemini/gemini-3-flash-preview"
+
+output:
+  base_dir: "experiments/mcpatlas/underspec_datasets"

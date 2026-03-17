@@ -1,0 +1,14 @@
+{
+  "primary_task": "One of our clients doing beverage-related commercials has requested us to conduct this data analysis for them.\nSpecifically, find the `beverage_stats.xlsx` under `Documents/Data Analysis` in `/inputs/THE OWNCLOUD FOLDER`, and answer the following questions:\n\n1. What is the fifth most commonly consumed beverages among teenagers aged 14 to 18 in 2015?\n2. what is the average percentage of children and teenagers drinking water in 2015?\n3. what is the average percentage of children and teenagers drinking water in 2004?\n\nAnswer each question with a short phrase and separate answers by lines.\nWrite the responses to `/THE OWNCLOUD FOLDER/answer.docx` for ease of future revision.\n\nHere are the links for your reference:\nCloud Drive: /inputs/THE OWNCLOUD FOLDER",
+  "underspecified_task": "One of our clients doing beverage-related commercials has requested us to conduct this data analysis for them.\nSpecifically, find the `beverage_stats.xlsx` under `Documents/Data Analysis` in `/inputs/THE OWNCLOUD FOLDER`, and answer the following questions:\n\n1. What is the most commonly consumed beverages among teenagers in 2015?\n2. what is the average percentage of children and teenagers drinking water in 2015?\n3. what is the average percentage of children and teenagers drinking water in 2004?\n\nAnswer each question with a short phrase and separate answers by lines.\nWrite the responses to `/THE OWNCLOUD FOLDER/answer.docx` for ease of future revision.\n\nHere are the links for your reference:\nCloud Drive: /inputs/THE OWNCLOUD FOLDER",
+  "removed_segments": [
+    {
+      "dimension": "constraint",
+      "value": "14 to 18"
+    },
+    {
+      "dimension": "constraint",
+      "value": "fifth"
+    }
+  ]
+}

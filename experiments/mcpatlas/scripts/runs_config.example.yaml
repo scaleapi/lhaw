@@ -1,0 +1,23 @@
+# Model run configuration for plot_pass3_comparison.py
+#
+# Usage:
+#   python plot_pass3_comparison.py --dataset-dir /path/to/dataset --config runs_config.yaml
+#
+# Each model needs:
+#   baseline_prefix: prefix for baseline CSV file (e.g., "claude" -> claude_pass_k_per_task.csv)
+#   no_user: run directory name for underspec without ask_user tool
+#   with_user: run directory name for underspec with ask_user tool
+
+models:
+  "Claude Opus 4.5":
+    baseline_prefix: claude
+    no_user: run_sampled_underspecified_claude-opus-4-5-20251101_20260123_060406
+    with_user: run_sampled_underspecified_with_user_new_claude-opus-4-5-20251101_20260128_044057
+  "Gemini 3 Pro":
+    baseline_prefix: gemini
+    no_user: run_sampled_underspecified_gemini-3-pro-preview_20260123_060447
+    with_user: run_sampled_underspecified_with_user_new_gemini-3-pro-preview_20260128_155002
+  "GPT-5.2":
+    baseline_prefix: gpt
+    no_user: run_sampled_underspecified_gpt-5.2_20260124_023055
+    with_user: Run_sampled_underspecified_with_user_new_gpt-5.2_20260128_044134

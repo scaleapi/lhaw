@@ -1,0 +1,28 @@
+# Example Configuration: Intersection with DELETE severity
+# This configuration generates underspecified variants using DELETE severity
+# for tasks that passed on ALL three baseline models
+
+dataset:
+  name: "intersection_delete_v1"
+  description: "DELETE severity on intersection tasks (passed by all models)"
+
+baseline:
+  data_dir: "full_inference_data"
+  model_patterns:
+    claude: "*claude-opus-4-5-20251101*"
+    gemini: "*gemini-3-pro-preview*"
+    gpt: "*gpt-5.2*"
+  pass_threshold: 0.75
+  aggregation_strategy: "intersection"
+
+underspec:
+  severity: "DELETE"
+  top_k: null
+  variant_top_k: 1
+  min_level: 1
+  max_level: 1
+  extraction_model: "gemini/gemini-3-flash-preview"
+  generation_model: "gemini/gemini-3-flash-preview"
+
+output:
+  base_dir: "experiments/mcpatlas/underspec_datasets"

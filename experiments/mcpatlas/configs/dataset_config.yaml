@@ -1,0 +1,59 @@
+# Dataset Configuration Template
+# Copy this file and customize for your specific dataset
+
+dataset:
+  name: "my_dataset_v1"
+  description: "Description of what this dataset tests"
+
+# Baseline discovery and aggregation
+baseline:
+  # Directory containing baseline inference results
+  data_dir: "full_inference_data"
+
+  # Glob patterns to auto-discover model runs (most recent match is used)
+  # Pattern examples:
+  #   - "*claude-opus*" - matches any directory containing "claude-opus"
+  #   - "FULL_*_claude-*" - matches directories starting with FULL_ and containing claude-
+  model_patterns:
+    claude: "*claude-opus-4-5-20251101*"
+    gemini: "*gemini-3-pro-preview*"
+    gpt: "*gpt-5.2*"
+
+  # Pass threshold (0.0 - 1.0)
+  pass_threshold: 0.75
+
+  # Aggregation strategy
+  # - "intersection": Only tasks passed by ALL models
+  # - "union": Tasks passed by ANY model
+  aggregation_strategy: "intersection"
+
+# Underspecified variant generation
+underspec:
+  # Removal strategy
+  # - "DELETE": Remove segments entirely
+  # - "VAGUIFY": Make segments more vague
+  # - "GENERICIZE": Make segments more generic
+  severity: "DELETE"
+
+  # Limit to top K segments by priority (null = all segments)
+  top_k: null
+
+  # Number of variants to include per task
+  variant_top_k: 1
+
+  # Min segments that must be removed (filters out variants with fewer)
+  # Example: min_level: 2 with max_level: 2 gives exactly 2-segment removals
+  min_level: 1
+
+  # Max segments to remove together (1=single, 2=pairs, etc.)
+  max_level: 1
+
+  # Model for segment extraction
+  extraction_model: "gemini/gemini-3-flash-preview"
+
+  # Model for variant generation
+  generation_model: "gemini/gemini-3-flash-preview"
+
+# Output configuration
+output:
+  base_dir: "experiments/mcpatlas/underspec_datasets"

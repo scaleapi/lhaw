@@ -1,0 +1,4 @@
+{
+  "primary_task": "There is a PDF file OpenHands.pdf on owncloud (`/inputs/THE OWNCLOUD FOLDER`) under directory Documents/Research.\nExtract the content of Table 3,4,5,6 and put them in a spreadsheet entitled \"openhands_evaluation.xlsx\" in `/THE OWNCLOUD FOLDER/openhands_evaluation.xlsx`. Each table should be a separate sheet in the spreadsheet.",
+  "underspecified_task": ""
+}

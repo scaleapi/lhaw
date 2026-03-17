@@ -1,0 +1,14 @@
+{
+  "primary_task": "Find \"Documents/Data Analysis/Number of Agri Ops.xlsx\" spreadsheet at `/inputs/THE OWNCLOUD FOLDER`. Create visualizations for the agricultural operations w.r.t. vegetable crop categories in 2011 and 2016, respectively. Particularly, draw a pie chart for 2011 data and a bar chart for 2016. Save the chart figures as '/THE OWNCLOUD FOLDER/2011_pie.png' and '/THE OWNCLOUD FOLDER/2016_bar.png'.",
+  "underspecified_task": "Find \"Documents/Data Analysis/Number of Agri Ops.xlsx\" spreadsheet at `/inputs/THE OWNCLOUD FOLDER`. Create visualizations for the agricultural operations w.r.t. vegetable crop categories in 2011 and 2016, respectively. Particularly, draw a pie chart for 2011 data and a bar chart for 2016. Save the chart figures.",
+  "removed_segments": [
+    {
+      "dimension": "goal",
+      "value": "/THE OWNCLOUD FOLDER/2011_pie.png"
+    },
+    {
+      "dimension": "goal",
+      "value": "/THE OWNCLOUD FOLDER/2016_bar.png"
+    }
+  ]
+}

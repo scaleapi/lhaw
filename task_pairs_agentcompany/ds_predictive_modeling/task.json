@@ -1,0 +1,14 @@
+{
+  "primary_task": "On our office cloud at `/inputs/THE OWNCLOUD FOLDER`, find \"/Documents/Financials/stock_train_raw.csv\", \nbuild a machine learning pipeline in scikit-learn to predict the daily closing price of stock. \nSave your model's predictions to the test data \"/THE OWNCLOUD FOLDER/stock_test.csv\" as \"/THE OWNCLOUD FOLDER/stock_test_answer.csv\" \nwith one column named \"Close Price\". You will be evaluated on Mean Squared Error \n(MSE), Mean Absolute Error (MAE), and R² score, with a focus on maximizing the R² score.",
+  "underspecified_task": "On our office cloud at `/inputs/THE OWNCLOUD FOLDER`, find the relevant dataset, \nbuild a machine learning pipeline in scikit-learn to predict the daily target variable of stock. \nSave your model's predictions to the test data \"/THE OWNCLOUD FOLDER/stock_test.csv\" as \"/THE OWNCLOUD FOLDER/stock_test_answer.csv\" \nwith one column named \"Close Price\". You will be evaluated on Mean Squared Error \n(MSE), Mean Absolute Error (MAE), and R² score, with a focus on maximizing the R² score.",
+  "removed_segments": [
+    {
+      "dimension": "input",
+      "value": "/Documents/Financials/stock_train_raw.csv"
+    },
+    {
+      "dimension": "goal",
+      "value": "closing price"
+    }
+  ]
+}

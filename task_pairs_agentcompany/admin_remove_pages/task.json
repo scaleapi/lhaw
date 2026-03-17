@@ -1,0 +1,4 @@
+{
+  "primary_task": "Our company is organizing a paper reading session, and the chosen paper is about \"OpenHands\". Could you assist by creating a shortened version of the paper?\n\nPlease Include the \"References\" section in the shortened version, but remove all content after it. Save the shortened paper as /THE OWNCLOUD FOLDER/openhands_short.pdf on your system.\nThe original paper can be found on owncloud (`/inputs/THE OWNCLOUD FOLDER`) in the Documents/Research directory.\n\nThank you! Someone else will print the paper before the meeting.",
+  "underspecified_task": ""
+}

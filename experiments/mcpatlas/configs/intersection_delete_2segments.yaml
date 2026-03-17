@@ -1,0 +1,28 @@
+# Configuration: Intersection with DELETE severity, exactly 2 segments removed
+# This configuration generates underspecified variants by removing 2 segments together
+# Note: max_level=2 enables pair-wise segment removal
+
+dataset:
+  name: "intersection_delete_2segments"
+  description: "DELETE severity removing exactly 2 segments per variant"
+
+baseline:
+  data_dir: "full_inference_data"
+  model_patterns:
+    claude: "*claude-opus-4-5-20251101*"
+    gemini: "*gemini-3-pro-preview*"
+    gpt: "*gpt-5.2*"
+  pass_threshold: 0.75
+  aggregation_strategy: "intersection"
+
+underspec:
+  severity: "DELETE"
+  top_k: 2 # Consider top 2 segments
+  variant_top_k: 1 # Keep 1 variant per task
+  min_level: 2 # Filter out variants with < 2 segments removed
+  max_level: 2 # Enable removal of up to 2 segments together
+  extraction_model: "gemini/gemini-3-flash-preview"
+  generation_model: "gemini/gemini-3-flash-preview"
+
+output:
+  base_dir: "experiments/mcpatlas/underspec_datasets"

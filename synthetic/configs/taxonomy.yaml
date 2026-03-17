@@ -1,0 +1,130 @@
+# LHAW Underspecification Taxonomy
+# ================================
+# General taxonomy for underspecification in agentic tasks.
+# Aligned with ambiguity_definition.pdf formalism where segments = latent dimensions (θ).
+# 
+# Removing a segment and running pass@k reveals if it's:
+#   - OUTCOME-CRITICAL: Different outcomes → agent should clarify
+#   - BENIGN: Same outcome → segment was guessable/redundant
+#
+# This taxonomy is domain-agnostic and applies to:
+#   - TAC (enterprise workflows)
+#   - SWE-bench (code/debugging)
+#   - MCPAtlas (agentic tool usage)
+#   - General task completion
+
+dimensions:
+  goal:
+    question: "WHAT should be accomplished or produced?"
+    definition: >
+      The intended outcome, deliverable, or success criteria is unclear.
+      The agent doesn't know what to produce or what counts as task completion.
+    failure_mode: "Agent produces wrong output, misses requirements, or solves wrong problem."
+    
+    indicators:
+      - "Vague action verbs: 'analyze', 'fix', 'improve', 'handle', 'process'"
+      - "Missing deliverable spec: what exactly to produce"
+      - "Undefined success criteria: what counts as 'done' or 'correct'"
+      - "Ambiguous scope: what's included vs excluded"
+      - "Unclear recipient/audience: who is this for"
+    
+    subdimensions:
+      target:
+        description: "The specific thing to produce, fix, or accomplish"
+        examples: ["report.xlsx", "the login bug", "reservation #12345", "email to team"]
+      format:
+        description: "File type, output structure, or response format"
+        examples: ["xlsx", "JSON", "markdown table", "PDF with charts"]
+      content:
+        description: "Required fields, sections, or elements in the output"
+        examples: ["Name and Amount columns", "include summary", "list of recommendations"]
+      acceptance:
+        description: "Criteria that define task success (not process constraints)"
+        examples: ["tests pass", "user approves", "matches reference", "no errors"]
+
+  constraint:
+    question: "HOW should it be done?"
+    definition: >
+      The rules, thresholds, methods, or requirements for execution are unclear.
+      The agent knows what to do but not the specific parameters or approach.
+    failure_mode: "Agent uses wrong parameters, applies wrong method, or violates requirements."
+    
+    indicators:
+      - "Missing thresholds: 'flag anomalies' without criteria"
+      - "Unqualified superlatives: 'top', 'best', 'highest' without metric/count"
+      - "Vague precision: 'calculate' without rounding/format rules"
+      - "Undefined bounds: 'recent', 'large', 'few' without specifics"
+      - "Ambiguous method: 'sort', 'filter', 'process' without criteria"
+    
+    subdimensions:
+      numeric_bound:
+        description: "Thresholds, limits, counts, or quantities"
+        examples: ["top 5", "at least 10", "under $500", "max 3 retries"]
+      precision:
+        description: "Rounding, truncation, significant figures, tolerance"
+        examples: ["round up", "2 decimal places", "nearest integer", "within 5%"]
+      temporal:
+        description: "Time ranges, deadlines, periods, schedules"
+        examples: ["last 12 months", "before Friday", "Q1 2024", "within 24 hours"]
+      selection:
+        description: "Criteria for including/excluding items"
+        examples: ["only active", "exclude nulls", "where status=open", "matching pattern X"]
+      method:
+        description: "Algorithm, approach, or technique to use"
+        examples: ["use binary search", "apply FIFO", "sort by date desc", "aggregate by sum"]
+
+  input:
+    question: "FROM WHERE should data/resources be obtained?"
+    definition: >
+      The data source, location, or resource reference is unclear.
+      The agent cannot locate or access the required inputs.
+    failure_mode: "Agent uses wrong data, accesses wrong system, or can't find resources."
+    
+    indicators:
+      - "Generic reference: 'the file', 'the data', 'the document'"
+      - "Missing location: 'in the folder', 'on the server', 'in the repo'"
+      - "Ambiguous version: 'the latest', 'the current', 'the old one'"
+      - "Unspecified system: 'the database', 'the API', 'the service'"
+      - "Unknown identifier: 'the customer', 'the order', 'the ticket'"
+    
+    subdimensions:
+      source:
+        description: "Where to get data (file, API, database, service, person)"
+        examples: ["from sales.csv", "via Stripe API", "in PostgreSQL", "ask the user"]
+      location:
+        description: "Path, URL, endpoint, or address"
+        examples: ["/data/reports/", "api.example.com/v2", "s3://bucket/key", "repo:main branch"]
+      identifier:
+        description: "Specific name, ID, or reference"
+        examples: ["order #12345", "user_id=abc", "ticket JIRA-567", "PR #42"]
+      version:
+        description: "Which version, snapshot, or state"
+        examples: ["v2.0", "as of 2024-01-01", "latest stable", "before the merge"]
+
+  context:
+    question: "WHAT BACKGROUND KNOWLEDGE is assumed?"
+    definition: >
+      Domain knowledge, business logic, or implicit conventions are unclear.
+      The agent lacks understanding to interpret the task correctly.
+    failure_mode: "Agent misinterprets requirements or applies wrong assumptions."
+    
+    indicators:
+      - "Undefined terminology: acronyms, jargon, domain terms"
+      - "Implicit business rules: org-specific policies or logic"
+      - "Assumed conventions: 'standard', 'usual', 'normal' process"
+      - "Missing tool context: how to use specific systems"
+      - "Cultural/domain norms: what's acceptable in this context"
+    
+    subdimensions:
+      terminology:
+        description: "Domain-specific terms, acronyms, definitions"
+        examples: ["MRR", "P0 bug", "qualified lead", "sprint velocity"]
+      business_logic:
+        description: "Organization-specific rules, policies, or calculations"
+        examples: ["overtime = 1.5x after 40h", "approval required over $1k", "SLA = 24h"]
+      conventions:
+        description: "Implicit standards or norms in this context"
+        examples: ["dates in ISO format", "amounts in USD", "use company template"]
+      tool_knowledge:
+        description: "How to use specific tools, APIs, or systems"
+        examples: ["git workflow", "JIRA board structure", "Slack channel conventions"]

@@ -1,0 +1,4 @@
+# MCP Server requirements
+fastmcp>=0.1.0
+openai>=1.0.0
+tenacity>=8.0.0

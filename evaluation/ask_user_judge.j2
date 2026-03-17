@@ -1,0 +1,164 @@
+Failure Analysis Categories:
+    1. Question Quality Deficiency: The agent asks questions, but they are poorly formulated and fail to elicit the necessary information.
+    2. Question Targeting Error: The agent asks questions about the wrong aspects of the task, missing the critical missing information.
+    3. Information Integration Failure: The agent receives correct information but fails to properly incorporate it into task execution.
+    4. Over-Clarification: The agent asks excessive questions, including about information that was not removed or could be inferred.
+    5. Under-Clarification: The agent asks too few questions relative to the amount of critical missing information.
+    6. Timing & Strategy Error: The agent asks questions at inappropriate times or in an inefficient sequence.
+    7. User Response Misinterpretation: The agent misunderstands or incorrectly processes the user's clarifying responses.
+
+Detailed Analysis Flags:
+For each flag below, choose YES, NO, or N/A based on the strict definitions provided:
+
+1. Question Quality Deficiencies
+  - `flag_vague_questions`:
+    - Definition: Whether the agent's questions are too vague or ambiguous to elicit specific, actionable information.
+    - Prerequisite: The agent asked at least one clarification question.
+    - `YES`: Questions lack specificity needed to recover precise information (e.g., "What file?" instead of "Which attendance file should I use - april-attendance.csv or may-attendance.csv?").
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_compound_questions`:
+    - Definition: Whether the agent bundles multiple distinct questions together, making it difficult for users to provide complete answers.
+    - Prerequisite: The agent asked at least one clarification question.
+    - `YES`: Questions contain multiple sub-questions that should be asked separately.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_closed_questions`:
+    - Definition: Whether the agent asks yes/no or multiple choice questions when open-ended questions are needed.
+    - Prerequisite: The removed segment requires complex or detailed information.
+    - `YES`: Agent uses closed questions for information requiring detailed responses.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+2. Question Targeting Errors
+  - `flag_missed_critical_segments`:
+    - Definition: Whether the agent fails to ask about outcome-critical missing information.
+    - Prerequisite: At least one removed segment has criticality ≥ 0.5 and guessability ≤ 0.5.
+    - `YES`: Agent does not ask about critical segments that required clarification.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_wrong_dimension_focus`:
+    - Definition: Whether the agent asks about the wrong dimension of missing information.
+    - Prerequisite: Multiple dimensions have removed segments.
+    - `YES`: Agent focuses questions on dimensions with low criticality while ignoring high criticality dimensions.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_inferable_information_asked`:
+    - Definition: Whether the agent asks about information that could be inferred from the environment or context.
+    - Prerequisite: At least one removed segment has guessability ≥ 0.5.
+    - `YES`: Agent asks about information marked as inferable that it could have discovered through exploration.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+3. Information Integration Failures
+  - `flag_ignoring_user_response`:
+    - Definition: Whether the agent receives correct information but does not use it in subsequent actions.
+    - Prerequisite: The agent asked at least one question AND received a correct response.
+    - `YES`: Agent's actions after receiving information do not reflect the provided details.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_incorrect_information_application`:
+    - Definition: Whether the agent applies the received information incorrectly to the task.
+    - Prerequisite: The agent received correct information from the user.
+    - `YES`: Agent uses the information but applies it to the wrong part of the task or in the wrong way.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_partial_information_utilization`:
+    - Definition: Whether the agent only uses part of the information provided in user responses.
+    - Prerequisite: User responses contain multiple pieces of information.
+    - `YES`: Agent extracts and uses only a subset of the information provided.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+4. Over-Clarification Issues
+  - `flag_redundant_questions`:
+    - Definition: Whether the agent asks the same or highly similar questions multiple times.
+    - Prerequisite: The agent asked multiple questions.
+    - `YES`: Agent repeats questions or asks about information already provided.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_unnecessary_questions`:
+    - Definition: Whether the agent asks about information that was not removed or is clearly stated in the task.
+    - Prerequisite: None.
+    - `YES`: Agent asks questions about information already present in the task prompt.
+    - `NO`: The conditions for `YES` are NOT satisfied.
+
+  - `flag_excessive_cost`:
+    - Definition: Whether the number of questions asked is disproportionate to the performance improvement achieved.
+    - Prerequisite: The agent asked at least 3 questions.
+    - `YES`: Cost-efficiency is low (< 0.3) despite multiple questions being asked.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+5. Under-Clarification Issues
+  - `flag_premature_execution`:
+    - Definition: Whether the agent proceeds with task execution before clarifying critical missing information.
+    - Prerequisite: Multiple segments were removed with high criticality.
+    - `YES`: Agent begins critical task actions before asking necessary questions.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_insufficient_question_depth`:
+    - Definition: Whether the agent asks too few questions relative to the amount of missing critical information.
+    - Prerequisite: Multiple critical segments were removed.
+    - `YES`: Information recovery rate < 0.5 and ask_recall < 0.5.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_false_confidence`:
+    - Definition: Whether the agent proceeds with assumptions instead of clarifying when uncertainty is warranted.
+    - Prerequisite: The agent makes explicit or implicit assumptions about missing information.
+    - `YES`: Agent states or demonstrates assumptions without seeking validation.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+6. Timing & Strategy Errors
+  - `flag_late_clarification`:
+    - Definition: Whether the agent asks questions too late in the execution, after the information was needed.
+    - Prerequisite: The agent asked at least one question AND information is used early in task execution.
+    - `YES`: Questions are asked after the point where the information would have been useful.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_upfront_question_dump`:
+    - Definition: Whether the agent asks all questions at the beginning without attempting any exploration.
+    - Prerequisite: The agent asked multiple questions (≥3).
+    - `YES`: All questions are asked in the first 10% of the trajectory without intermediate exploration.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_inefficient_question_sequence`:
+    - Definition: Whether the order of questions is illogical or inefficient for task progression.
+    - Prerequisite: The agent asked multiple questions (≥2).
+    - `YES`: Questions are asked in an order that prevents building on previous answers or requires backtracking.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+7. User Response Misinterpretation
+  - `flag_literal_misunderstanding`:
+    - Definition: Whether the agent misinterprets the literal meaning of user responses.
+    - Prerequisite: User provided clear, direct responses.
+    - `YES`: Agent demonstrates misunderstanding of explicit information in responses.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_context_misapplication`:
+    - Definition: Whether the agent fails to contextualize user responses within the broader task.
+    - Prerequisite: User responses require task context to be properly applied.
+    - `YES`: Agent uses information out of context or misapplies it to wrong task components.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.
+
+  - `flag_implicit_information_missed`:
+    - Definition: Whether the agent misses implicit information or implications in user responses.
+    - Prerequisite: User responses contain implicit information beyond literal statements.
+    - `YES`: Agent fails to extract or use implied information that would aid task completion.
+    - `NO`: The prerequisite IS met, but the conditions for `YES` are NOT satisfied.
+    - `N/A`: The prerequisite is NOT met.

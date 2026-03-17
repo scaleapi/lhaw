@@ -1,0 +1,43 @@
+{
+    "_note": "Model-specific overrides. All models get timeout=300s, num_retries=3 by default (utils.py). Models not listed here still work -- they just use defaults. Keys use standard LiteLLM identifiers (no litellm_proxy/ prefix).",
+    "models": {
+        "anthropic/claude-opus-4-5-20251101": {"max_output_tokens": 64000},
+        "anthropic/claude-sonnet-4-5-20250929": {"max_output_tokens": 64000},
+        "anthropic/claude-opus-4-6-20260205": {"max_output_tokens": 64000},
+        "anthropic/claude-sonnet-4-6": {"max_output_tokens": 64000},
+        "anthropic/claude-haiku-4-5-20251001": {},
+        "anthropic/claude-sonnet-4-20250514": {"max_output_tokens": 64000},
+        "anthropic/claude-opus-4-1-20250805": {"max_output_tokens": 32000},
+        "anthropic/claude-3-5-sonnet-20241022": {},
+        "anthropic/claude-3-7-sonnet-20250219": {},
+
+        "openai/gpt-5.2-2025-12-11": {},
+        "openai/gpt-5.1-2025-11-13": {},
+        "openai/gpt-5-2025-08-07": {},
+        "openai/o3-pro-2025-06-10": {},
+        "openai/o3-2025-04-16": {},
+        "openai/gpt-4o": {},
+        "openai/gpt-4.1": {},
+        "openai/gpt-4.1-mini": {},
+
+        "gemini/gemini-3-pro-preview": {},
+        "gemini/gemini-3-flash-preview": {},
+        "gemini/gemini-3.1-pro-preview": {},
+        "gemini/gemini-3.1-flash-lite-preview": {},
+        "gemini/gemini-2.5-pro-preview-05-06": {},
+
+        "fireworks_ai/kimi-k2-instruct-0905": {},
+        "fireworks_ai/qwen3-235b-a22b": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "max_output_tokens": 32768
+        },
+        "fireworks_ai/llama4-maverick-instruct-basic": {},
+        "fireworks_ai/glm-4p5-air": {},
+        "bedrock/global.amazon.nova-2-lite-v1:0": {}
+    },
+    "task_context": {
+        "inputs_note": "NOTE: You can explore './inputs' directory for extra information and reference material to execute the task. The folder might be empty, meaning that no further information is provided.",
+        "output_note": "IMPORTANT: Always save your final deliverables to the './output' directory. This directory has been created for you. Put all your output files, scripts, and results in this directory. Always save your intermediate scripts or files to the './auxiliary' directory. This directory has been created for you. Put all your intermediate files and scripts in this directory."
+    }
+}

@@ -1,0 +1,60 @@
+# Runtime artifacts
+experiments/agentcompany/runs/
+experiments/agentcompany/temp_tasks/
+experiments/agentcompany/data/
+experiments/agentcompany/reports/
+experiments/agentcompany/golden_trajectories/
+experiments/swebench/golden_trajectories/
+experiments/swebench/runs/
+*.log
+
+# Synthetic pipeline outputs
+synthetic/outputs/
+
+# Docs (local working notes, not tracked)
+docs/
+
+# Archived scripts and docs (kept locally, not tracked)
+scripts/_archived/
+docs/_archived/
+
+# Claude Code instructions (contains env-specific paths)
+CLAUDE.md
+
+# Experiment outputs (large, regenerable)
+outputs/
+
+# Data files (task lists, variants)
+data/
+initial-data/
+
+# Generated underspecified variants
+task_pairs_agentcompany/underspecified/
+
+# TAC data files (download from S3, see README)
+experiments/agentcompany/tac-openhands/
+
+# SWEBench repo + evaluation + user simulator code
+swebenchpro/SWE-bench_Pro-os
+
+# MCP Atlas repo (clone separately, see experiments/mcpatlas/README.md)
+experiments/mcpatlas/mcp-atlas/
+
+# MCP Atlas large dataset (download from S3)
+experiments/mcpatlas/MCP-Atlas.csv
+
+# MCP Atlas generated data
+experiments/mcpatlas/trajectories/
+experiments/mcpatlas/inference_data/
+experiments/mcpatlas/underspec_output/
+experiments/mcpatlas/underspec_test/
+experiments/mcpatlas/underspec_full/
+experiments/mcpatlas/full_inference_data/
+experiments/mcpatlas/underspec_datasets/
+experiments/mcpatlas/experiments/
+experiments/mcpatlas/runs/
+experiments/mcpatlas/reports/
+# Virtual environment
+.venv311/
+
+hf_variants/

@@ -1,0 +1,26 @@
+# Test Configuration - Small subset for pipeline testing
+# This config is designed for quick testing of the pipeline
+
+dataset:
+  name: "test_pipeline"
+  description: "Quick test of the pipeline with intersection tasks"
+
+baseline:
+  data_dir: "full_inference_data"
+  model_patterns:
+    claude: "*claude-opus-4-5-20251101*"
+    gemini: "*gemini-3-pro-preview*"
+    gpt: "*gpt-5.2*"
+  pass_threshold: 0.75
+  aggregation_strategy: "intersection"
+
+underspec:
+  severity: "DELETE"
+  top_k: 3                              # Limit to 3 segments for faster testing
+  variant_top_k: 1
+  max_level: 1
+  extraction_model: "gemini/gemini-3-flash-preview"
+  generation_model: "gemini/gemini-3-flash-preview"
+
+output:
+  base_dir: "experiments/mcpatlas/underspec_datasets"

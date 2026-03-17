@@ -1,0 +1,14 @@
+{
+  "primary_task": "Navigate to owncloud at `/inputs/THE OWNCLOUD FOLDER`.\n\n* Use the provided \"april-attendance-data.csv\" spreadsheet in owncloud's \"Documents/Human Resources Team/Attendance\" folder, and the pay rates information in \"salary-rates.pdf\" file in the same folder to calculate the total earnings for each employee based on the number of hours that they have worked in total. \n\n* We want to be generous and round up their total work hours to the next nearest integer value. However, be careful not to round up their work hour for each individual day. Only round up the total.\n\n* Create a report called \"april-payroll.xlsx\" in the local `/THE OWNCLOUD FOLDER/` directory. You must make sure that it is a xlsx file.\n\n* In the report, have columns with names 'Name' and 'Total Earnings'.",
+  "underspecified_task": "Navigate to owncloud at `/inputs/THE OWNCLOUD FOLDER`.\n\n* Use the provided \"april-attendance-data.csv\" spreadsheet in owncloud's \"Documents/Human Resources Team/Attendance\" folder, and the pay rates information in \"salary-rates.pdf\" file in the same folder to calculate the total earnings for each employee based on the number of hours that they have worked in total. \n\n* We want to be generous and round up their total work hours to the next nearest integer value. However, be careful not to round up their work hour for each individual day. \n\n* Create a report called \"april-payroll.xlsx\" in the local `/THE OWNCLOUD FOLDER/` directory. You must make sure that it is a xlsx file.\n\n* In the report, have columns with names .",
+  "removed_segments": [
+    {
+      "dimension": "goal",
+      "value": "'Name' and 'Total Earnings'"
+    },
+    {
+      "dimension": "constraint",
+      "value": "Only round up the total"
+    }
+  ]
+}

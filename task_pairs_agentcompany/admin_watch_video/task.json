@@ -1,0 +1,4 @@
+{
+  "primary_task": "You are an admin looking for a office for our company's new branch. Since our people\nlove running, you decide to skip those office candidates without gyms. One salesperson sent\nyou a video of their gym. Find gym.mp4 in `/inputs/THE OWNCLOUD FOLDER` and count\nhow many treadmills it has. Write down your answer (a number, nothing else) in\n/THE OWNCLOUD FOLDER/ans.txt",
+  "underspecified_task": ""
+}

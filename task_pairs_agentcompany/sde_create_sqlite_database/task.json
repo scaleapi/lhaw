@@ -1,0 +1,14 @@
+{
+  "primary_task": "On our office cloud at `/inputs/THE OWNCLOUD FOLDER`, find the July-Sep 2024\nfinancial report for our company, and create a SQLite database with two tables that\nappropriately populates the data in the report:\n\n- financial_categories\n- financial_details\n\nThe financial_categories table has the following columns:\n\n- category_id\n- category_name\n- category_type\n\nThe financial_details table has the following columns:\n\n- detail_id\n- category_id\n- month (strings in the format YYYY-MM)\n- actual\n- budget\n- variance\n- percent_of_budget\n\nThe SQLite database should be named \"financial_report.db\".",
+  "underspecified_task": "On our office cloud at `/inputs/THE OWNCLOUD FOLDER`, find the July-Sep 2024\nfinancial report for our company, and create a SQLite database with two tables that\nappropriately populates the data in the report:\n\n- \n- \n\nThe  table has the following columns:\n\n- category_id\n- category_name\n- category_type\n\nThe  table has the following columns:\n\n- detail_id\n- category_id\n- month (strings in the format YYYY-MM)\n- actual\n- budget\n- variance\n- percent_of_budget\n\nThe SQLite database should be named \"financial_report.db\".",
+  "removed_segments": [
+    {
+      "dimension": "goal",
+      "value": "financial_categories"
+    },
+    {
+      "dimension": "goal",
+      "value": "financial_details"
+    }
+  ]
+}

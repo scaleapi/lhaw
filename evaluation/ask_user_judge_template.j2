@@ -1,0 +1,73 @@
+You are evaluating an AI agent's clarification-seeking behavior on an underspecified task.
+
+## Task Context
+
+**Original prompt (fully specified):**
+{{ original_prompt }}
+
+**Underspecified prompt (given to agent):**
+{{ underspec_prompt }}
+
+**Removed information:**
+{% for segment in removed_segments %}
+- {{ segment }}
+{% endfor %}
+
+**Coverage score achieved:** {{ coverage_score }}
+
+## Agent's Clarification Questions
+{% if calls %}
+{% for call in calls %}
+**Q{{ loop.index }}:** {{ call.question_text }}
+**Response:** {{ call.user_response or "No response received" }}
+{% endfor %}
+{% else %}
+The agent did not ask any clarification questions.
+{% endif %}
+
+---
+
+## Evaluation Framework
+
+{% include 'ask_user_judge.j2' %}
+
+---
+
+## Output Instructions
+
+Based on the evaluation framework above, analyze the agent's clarification behavior and return a JSON object with the following structure:
+
+```json
+{
+  "flag_vague_questions": true/false,
+  "flag_compound_questions": true/false,
+  "flag_closed_questions": true/false,
+  "flag_missed_critical_segments": true/false,
+  "flag_wrong_dimension_focus": true/false,
+  "flag_inferable_information_asked": true/false,
+  "flag_ignoring_user_response": true/false,
+  "flag_incorrect_information_application": true/false,
+  "flag_partial_information_utilization": true/false,
+  "flag_redundant_questions": true/false,
+  "flag_unnecessary_questions": true/false,
+  "flag_excessive_cost": true/false,
+  "flag_premature_execution": true/false,
+  "flag_insufficient_question_depth": true/false,
+  "flag_false_confidence": true/false,
+  "flag_late_clarification": true/false,
+  "flag_upfront_question_dump": true/false,
+  "flag_inefficient_question_sequence": true/false,
+  "flag_literal_misunderstanding": true/false,
+  "flag_context_misapplication": true/false,
+  "flag_implicit_information_missed": true/false,
+  "overall_assessment": "brief summary of the agent's clarification behavior",
+  "reasoning": "detailed explanation of your evaluation",
+  "failure_categories": ["list", "of", "failed", "category", "names"]
+}
+```
+
+**Important:**
+- Set each flag to `true` if the failure condition is met, `false` otherwise
+- If a prerequisite is not met, set the flag to `false` (not a failure)
+- `failure_categories` should list the category names (e.g., "Question Quality", "Over-Clarification") where at least one flag is true
+- Return ONLY the JSON object, no additional text

@@ -1,0 +1,14 @@
+{
+  "primary_task": "Navigate to `/inputs/THE OWNCLOUD FOLDER`.\n\n* Use the provided `attendance-2024-03-01.csv` spreadsheet in \"Documents/Human Resources Team/Attendance\" folder to identify employees who have perfect attendance. Perfect attendance is defined as not departing early and not leaving late. Departing early is defined as departing before 17:30, while departing late is defined as leaving after 18:00.\n\n* Create a report called \"2024-03-attendance-summary.xlsx\" in the local `/THE OWNCLOUD FOLDER` directory. You must make sure that it is a xlsx file.\n\n* In the report, have one column with the name \"Name\". Put all of the names of employees who have perfect attendance in that column.",
+  "underspecified_task": "Navigate to the designated directory.\n\n* Use the provided `attendance-2024-03-01.csv` spreadsheet in \"Documents/Human Resources Team/Attendance\" folder to identify employees who have perfect attendance. Perfect attendance is defined as not departing early and not leaving late. Departing early is defined as departing before the standard shift end time, while departing late is defined as leaving after 18:00.\n\n* Create a report called \"2024-03-attendance-summary.xlsx\" in the local directory. You must make sure that it is a xlsx file.\n\n* In the report, have one column with the name \"Name\". Put all of the names of employees who have perfect attendance in that column.",
+  "removed_segments": [
+    {
+      "dimension": "input",
+      "value": "/inputs/THE OWNCLOUD FOLDER"
+    },
+    {
+      "dimension": "constraint",
+      "value": "17:30"
+    }
+  ]
+}
