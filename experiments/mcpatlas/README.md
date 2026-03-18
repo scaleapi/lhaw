@@ -8,13 +8,12 @@ Evaluation infrastructure for [MCP Atlas](https://github.com/scaleapi/mcp-atlas)
 
 ```bash
 cd lhaw/experiments/mcpatlas
-# TODO: switch to scaleapi/mcp-atlas-lhaw once the proper fork is made
-git clone git@github.com:sam-scale/mcp-atlas-lhaw-private.git mcp-atlas
-cd mcp-atlas
-git submodule update --init --recursive
 
-# (Optional) Add upstream for tracking differences from original
-git remote add upstream https://github.com/scaleapi/mcp-atlas.git
+# Checkout our branch with user simulator changes for MCP-Atlas support
+git clone git@github.com:scaleapi/mcp-atlas.git mcp-atlas
+cd mcp-atlas
+git checkout lhaw/ask-user-tool
+git submodule update --init --recursive
 ```
 
 ### 2. Setup Environment
@@ -22,17 +21,18 @@ git remote add upstream https://github.com/scaleapi/mcp-atlas.git
 Copy the environment template and add your API keys:
 
 ```bash
-cp mcp-atlas/env.template mcp-atlas/.env
-# Edit mcp-atlas/.env with your API keys
+# in lhaw/experiments/mcpatlas/mcp-atlas
+cp env.template .env
+# Edit .env with your API keys
 ```
 
 **Important:** Values in `.env` must NOT be quoted. Use:
 ```bash
-AIRTABLE_API_KEY=pat2ue5qp1dPF5mmG...
+AIRTABLE_API_KEY=pat2ue5q...
 ```
 Not:
 ```bash
-AIRTABLE_API_KEY="pat2ue5qp1dPF5mmG..."  # Wrong! Quotes break JSON config
+AIRTABLE_API_KEY="pat2ue5q..."  # Wrong! Quotes break JSON config
 ```
 
 Required API keys depend on which tasks you want to run:
@@ -43,14 +43,15 @@ Required API keys depend on which tasks you want to run:
 ### 3. Build & Run Services
 
 ```bash
+# Inside experiments/mcpatlas/mcp-atlas
 # One-time: build the Docker image
-cd experiments/mcpatlas/mcp-atlas && make build
+make build
 
 # Terminal 1: Start MCP servers
-cd experiments/mcpatlas/mcp-atlas && make run-docker
+make run-docker
 
 # Terminal 2: Start completion service
-cd experiments/mcpatlas/mcp-atlas && make run-mcp-completion
+make run-mcp-completion
 ```
 
 **Two-phase service workflow:** The `ask_user` tool is registered at service startup
@@ -94,20 +95,19 @@ The dataset (`MCP-Atlas.csv`) is automatically downloaded from [HuggingFace](htt
 
 ### Tool Response Caching (Optional)
 
-<!-- TODO: remove internal Scale infra references (sgpml-cache, CodeArtifact) before OSS release -->
-
 Enable Redis-based caching for MCP tool calls to reduce API costs and improve latency:
 
 ```bash
-# Set up Scale PyPI access (required for sgpml-cache dependency)
-AWS_PROFILE=ml-worker python ~/src/models/scripts_py3/scale_scripts/exe/maybe_refresh_codeartifact.py --export .codeartifact-pip-conf
-export UV_INDEX=$(pip config get global.index-url)
+# Optional, Scale-internal only: install sgpml-cache manually after normal setup (refresh code artifact + export UV_INDEX)
+cd services/mcp_eval && uv pip install sgpml-cache && cd ../..
 
 # Run with caching enabled
 TOOL_CACHE_ENABLED=True python task_completion_mcpatlas.py \
     --format_name baseline_v1 \
     --backend_model sonnet_4_5
 ```
+
+`sgpml-cache` is intentionally not listed in the public `mcp-atlas` `pyproject.toml`, because that would break normal public `uv` workflows when Scale's private package index is unavailable.
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -158,8 +158,8 @@ These servers require accounts on external services, data imports, and API keys.
 |--------|-------------|
 | **Airtable** | Copy base from shared link in `airtable_database_online_link.txt`, set `AIRTABLE_API_KEY` |
 | **Google Calendar** | Unzip `calendar_mcp_eval_export.zip`, import .ics file, set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN` |
-| **Notion** | Unzip `notion_mcp_eval_export.zip`, import via Settings > Import, set `NOTION_TOKEN` |
-| **MongoDB** | Unzip `mongo_dump_video_game_store.zip`, restore with `mongorestore`, set `MONGODB_CONNECTION_STRING` |
+| **Notion** | Import `mcp-atlas-notion-data.zip` via Settings > Import, set `NOTION_TOKEN` |
+| **MongoDB** | Unzip `mongo_dump_video_game_store-UNZIP-FIRST.zip`, restore with `mongorestore`, set `MONGODB_CONNECTION_STRING` |
 | **Slack** | Unzip `slack_mcp_eval_export.zip`, import to workspace, set `SLACK_MCP_XOXC_TOKEN`, `SLACK_MCP_XOXD_TOKEN` |
 
 See [MCP Atlas data_exports README](https://github.com/scaleapi/mcp-atlas/tree/main/data_exports) for detailed instructions.
