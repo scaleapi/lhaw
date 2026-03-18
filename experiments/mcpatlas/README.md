@@ -7,7 +7,7 @@ Evaluation infrastructure for [MCP Atlas](https://github.com/scaleapi/mcp-atlas)
 ### 1. Clone MCP Atlas Repository
 
 ```bash
-cd research/lhaw/experiments/mcpatlas
+cd lhaw/experiments/mcpatlas
 # TODO: switch to scaleapi/mcp-atlas-lhaw once the proper fork is made
 git clone git@github.com:sam-scale/mcp-atlas-lhaw-private.git mcp-atlas
 cd mcp-atlas
@@ -173,7 +173,7 @@ Generate underspecified prompts from MCP Atlas tasks for strategic clarification
 ### Quick Start
 
 ```bash
-cd research/lhaw
+cd lhaw
 source .venv/bin/activate && source .env
 
 # Generate for tasks that passed baselines (JSON list of task IDs)

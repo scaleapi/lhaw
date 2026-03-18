@@ -5,7 +5,7 @@ End-to-end pipeline for generating, running, evaluating, and classifying undersp
 ## Setup
 
 ```bash
-cd /mnt/efs/$(whoami)/src/models/research/lhaw
+cd lhaw
 
 # Python 3.11+ environment (conda or venv)
 conda create -n lhaw311 python=3.11 -y && conda activate lhaw311

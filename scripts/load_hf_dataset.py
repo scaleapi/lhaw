@@ -3,7 +3,7 @@ Load pre-computed LHAW variants from HuggingFace and write CSVs
 compatible with the run scripts, skipping the expensive LLM generation step.
 
 Usage:
-    cd research/lhaw
+    cd lhaw
     source .venv/bin/activate
 
     # MCP-Atlas (joins with source CSV for ENABLED_TOOLS / GTFA_CLAIMS / TRAJECTORY)
