@@ -485,6 +485,42 @@ Check container logs:
 docker logs mcpatlas-agent-env
 ```
 
+### Port already in use
+
+MCP-Atlas uses two local ports:
+- `1984` for the Dockerized `agent-environment` MCP servers
+- `3000` by default for the local `mcp_eval` completion service (`PORT` in `mcp-atlas/.env` may override this, e.g. `3001`)
+
+If `make run-docker` fails with `Bind for 0.0.0.0:1984 failed: port is already allocated`,
+find and stop the stale Docker container:
+
+```bash
+docker ps --format '{{.ID}}\t{{.Names}}\t{{.Ports}}' | rg '1984'
+docker stop <container_name_or_id>
+# If needed:
+docker rm -f <container_name_or_id>
+```
+
+If `make run-mcp-completion` fails because the completion-service port is already in use,
+first check `PORT=` in `mcp-atlas/.env`, then stop the old completion service in its
+original terminal with `Ctrl-C`. If you no longer have that terminal, find the listening
+process and kill it:
+
+```bash
+# Replace 3000 with the value from PORT= in mcp-atlas/.env
+sudo ss -ltnp '( sport = :3000 )'
+kill <pid>
+# If needed:
+kill -9 <pid>
+```
+
+To check both ports at once:
+
+```bash
+docker ps --format '{{.ID}}\t{{.Names}}\t{{.Ports}}' | rg '1984|3000'
+ss -ltnp '( sport = :1984 or sport = :3000 or sport = :3001 )'
+```
+
 ### API errors
 
 Verify your .env file has the required API keys for the servers your tasks use.

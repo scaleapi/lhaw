@@ -43,7 +43,7 @@ The end-to-end pipeline has four stages, each producing outputs consumed by the 
 
 ```bash
 cd lhaw
-uv venv && source .venv/bin/activate
+uv venv --python python3.11 && source .venv/bin/activate
 uv pip install -r requirements.txt
 
 cp .env.example .env   # edit with your credentials
@@ -85,7 +85,7 @@ Each domain has a self-contained example script for quick iteration and a detail
 | Pass@3 by ambiguity class | Table 9 | `generate_reports.sh all` |
 | Agentic prompting ablation | Table 11 | `generate_reports.sh ablation` |
 
-**Quick start:** `run_tac_example.sh` (4 tasks, 3 models). Edit variables at top to customize.
+**Quick start:** `bash run_tac_example.sh` (4 tasks, 3 models). Edit variables at top to customize.
 
 **Full reproduction** (all 33 tasks, all models, pass@3):
 
@@ -122,7 +122,7 @@ Requires Python 3.11+, SWE-agent (fork), and Modal for container orchestration.
 | Avg checkpoint progress by dimension | Table 7 | `compute_swebench_metrics.py` |
 | Pass@3 by ambiguity class | Table 10 | `compute_swebench_metrics.py` |
 
-**Quick start:** `run_swebench_example.sh` (5 tasks, 3 models, 10 variants). Edit `DOCKERHUB_USER` at top of script.
+**Quick start:** `bash run_swebench_example.sh` (5 tasks, 3 models, 10 variants). Edit `DOCKERHUB_USER` at top of script.
 
 **Full details:** [`experiments/swebench/README.md`](experiments/swebench/README.md) — setup, CLI reference, multi-model experiments, output structure, and troubleshooting.
 
@@ -139,7 +139,7 @@ Requires Docker and the MCP-Atlas repo with running MCP servers.
 | Ask-user failure modes | Table 5 | `analyze_ask_user.py` + `plot_ask_user.py` |
 | User persona ablation | Table 4 | `analyze_ask_user.py` (per persona) |
 
-**Quick start:** `run_mcpatlas_example.sh` (15 tasks, 3 models, default LIMIT=15). Edit `BASELINE_MODELS` to control task selection.
+**Quick start:** `bash run_mcpatlas_example.sh` (15 tasks, 3 models, default `LIMIT=15`). Edit `BASELINE_MODELS` to control task selection. This workflow has two service phases: run steps 1-5 with the normal completion service, then restart it with `USER_TOOL_ENABLED=True` before the ask-user steps. See the service note below and `run_mcpatlas_example.sh` comments for details.
 
 **Service note:** The script runs in two phases. Baselines and underspec-without-ask run with the normal completion service. Before ask_user experiments, stop the service and restart with `USER_TOOL_ENABLED=True make run-mcp-completion`. See script comments for details.
 
@@ -147,7 +147,7 @@ Requires Docker and the MCP-Atlas repo with running MCP servers.
 
 ---
 
-## Using Pre-computed Variants from HuggingFace
+## Using Pre-computed Underspecified Variants from HuggingFace
 
 The [ScaleAI/lhaw](https://huggingface.co/datasets/ScaleAI/lhaw) dataset contains all 285 benchmark variants used in the paper. Using it lets you **skip the generation phase** (segment extraction, variant generation, empirical validation) and go straight to running baselines + evaluation with the existing run scripts on the validated underspecified variants.
 
@@ -163,7 +163,7 @@ Then modify the run script variables to point at the loaded data and skip genera
 | Benchmark | Run script | What to change | Steps to skip |
 |-----------|-----------|----------------|---------------|
 | **MCP-Atlas** | `run_mcpatlas_example.sh` | Set `UNDERSPEC_DIR`, `BASELINE_MODELS`, use `--task_ids` | Steps 2-3, 5 |
-| **TAC** | `run_tac_example.sh` | Set `TASKS` from HF, set `FILTERED_JSON` | Steps 1b-5 |
+| **TAC** | `run_tac_example.sh` | Run step 1 baselines manually on HF tasks, then set `FILTERED_JSON` for step 6 | Steps 1b-5 |
 | **SWE-Bench Pro** | `run_swebench_example.sh` | Copy YAMLs into `EXP_DIR`, drop `--skip-baseline` | Steps 1-2 |
 
 **MCP-Atlas:** Step 4 feeds underspec prompts via `--input_csv "$UNDERSPEC_DIR/underspec_prompts.csv"`. Set `BASELINE_MODELS=("${MODELS[@]}")` so all model baselines run in step 1 (step 5 depends on `PASSED_JSON` from the skipped step 2, so skip it too):
@@ -179,14 +179,25 @@ TASK_IDS=$(python3 -c "import pandas as pd; print(','.join(pd.read_csv('$UNDERSP
 # (Steps 8 and 11 require json/ from the generation phase.)
 ```
 
-**TAC:** Step 6 (`run_experiment.sh`) loads underspec prompts via `--load-samples "$FILTERED_JSON"`, so pointing `FILTERED_JSON` at the HF benchmark hooks them in. Extract the task list from it for step 1 baselines:
+**TAC:** `run_tac_example.sh` hardcodes its own `TASKS`, so HF mode is partially manual today. Step 6 (`run_experiment.sh`) does honor `FILTERED_JSON`, but step 1 baselines should be run manually on the HF benchmark tasks:
 
 ```bash
-# Before running run_tac_example.sh:
+# Before running run_tac_example.sh (and after scripts/load_hf_dataset.py for TAC):
 HF_DIR="experiments/agentcompany/hf_variants"
 TASKS=($(python3 -c "import json; print(' '.join(sorted(set(v['task'] for v in json.load(open('$HF_DIR/benchmark.json'))))))"))
-# Use TASKS in step 1, then for step 6:
+
+# Step 1 only: run baselines on those tasks
+BASELINE_MODELS=(gemini_3_flash sonnet_4_6 gemini_3_1_flash_lite)  # quick-start example
+# For paper-style reproduction instead:
+# BASELINE_MODELS=(opus_4_5 sonnet_4_5 gemini_3_pro gemini_3_flash gpt_5_2)
+
+for model in "${BASELINE_MODELS[@]}"; do
+  ./scripts/synth_pipeline/tac.sh "$model" --tasks "${TASKS[@]}"
+done
+
+# Then use the HF benchmark directly for step 6 onward
 export FILTERED_JSON="$HF_DIR/benchmark.json"
+# Skip steps 1b-5 from run_tac_example.sh and continue with step 6.
 ```
 
 **SWE-Bench Pro:** Step 3 (`--run --exp-dir`) reads `instances.yaml` for both baselines and underspec trials. Since steps 1-2 are skipped, **remove `--skip-baseline`** from step 3 so baselines run against `original_instances.yaml`:
