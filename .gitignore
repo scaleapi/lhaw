@@ -31,9 +31,6 @@ initial-data/
 # Generated underspecified variants
 task_pairs_agentcompany/underspecified/
 
-# TAC data files (download from S3, see README)
-experiments/agentcompany/tac-openhands/
-
 # SWEBench repo + evaluation + user simulator code
 swebenchpro/SWE-bench_Pro-os
 

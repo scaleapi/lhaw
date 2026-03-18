@@ -7,7 +7,7 @@ Takes a JSON file with task IDs and generates:
 3. Full JSON outputs in a subdirectory with all segment/variant details
 
 Usage:
-    cd research/lhaw
+    cd lhaw
     source .venv/bin/activate && source .env
 
     # Generate for intersection_passed tasks

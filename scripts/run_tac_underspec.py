@@ -5,7 +5,7 @@ Underspecified Task Evaluation
 Generate underspecified variants and test if removing info causes task failure.
 
 Quick E2E Test (single task, 1 trial - all-in-one):
-    cd research/lhaw
+    cd lhaw
     python scripts/run_tac_underspec.py --all --tasks sde_create_sqlite_database --experiment test --num-trials 1
 
 Quick E2E Test (step-by-step):

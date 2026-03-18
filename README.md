@@ -10,7 +10,7 @@ Benchmark for evaluating LLM agents on **strategic clarification in underspecifi
 | **Dataset** | [ScaleAI/lhaw on Hugging Face](https://huggingface.co/datasets/ScaleAI/lhaw) (285 variants, CC BY 4.0) |
 | **Blog** | [Introducing LHAW](https://labs.scale.com/blog/LHAW) |
 
-> **Note:** The TAC experiment infrastructure in this repo was adopted from [scaleapi/mrt](https://github.com/scaleapi/mrt).
+> **Note:** The TAC experiment infrastructure in this repo was adopted from [scaleapi/mrt](https://github.com/scaleapi/mrt) and the original codebase [TheAgentCompany/TheAgentCompany](https://github.com/TheAgentCompany/TheAgentCompany).
 
 ---
 
@@ -42,7 +42,7 @@ The end-to-end pipeline has four stages, each producing outputs consumed by the 
 ## Setup
 
 ```bash
-cd research/lhaw
+cd lhaw
 uv venv && source .venv/bin/activate
 uv pip install -r requirements.txt
 
@@ -68,14 +68,6 @@ python -m pytest tests -q
 | OpenAI | `gpt_5_2`, `gpt_5_1`, `gpt_5`, `o3_pro`, `o3`, `gpt_4_1_mini` |
 | Google | `gemini_3_pro`, `gemini_3_flash`, `gemini_3_1_pro`, `gemini_3_1_flash_lite` |
 | Other | `kimi_k2`, `qwen3_235b`, `llama4_maverick`, `glm_4p5_air`, `nova_2_lite` |
-
-**TAC data files** (required for running TAC agents):
-
-```bash
-# TODO: Host these on HuggingFace or include in the repo
-aws s3 cp s3://scale-ml/research/lhaw/tac/tac-openhands/ \
-  experiments/agentcompany/tac-openhands/ --recursive
-```
 
 ---
 

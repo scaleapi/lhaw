@@ -2,7 +2,7 @@
 # LHAW mini reproduction — 4 tasks, 3 models, end-to-end
 #
 # Copy-paste steps individually (each depends on the previous completing).
-# Run from the LHAW root: src/models/research/lhaw/
+# Run from the LHAW root: lhaw/
 #
 # Task selection:
 #   TAC uses a fixed task list (TASKS). The paper selected 13 tasks with
