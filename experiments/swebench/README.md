@@ -87,6 +87,7 @@ python task_completion_swebench.py --run \
 ### Stage 4: Evaluate predictions
 
 Runs SWE-bench Pro Docker evaluation on all patches. Handles both variant (`exp_N/`) and baseline (`baseline_N/`) predictions.
+The source dataset file `swe_bench_pro_full.csv` is downloaded automatically on first evaluation if it is missing.
 
 ```bash
 # Evaluate only (no classification)
@@ -100,6 +101,8 @@ python scripts/process_swebench_underspec.py \
     --exp-dir experiments/swebench/runs/run_trial_v1_<timestamp> \
     --run-eval --dockerhub-username jefzda --judge
 ```
+
+If `--eval-only` fails for any trial or baseline, the command now exits non-zero so downstream summary steps do not continue with missing eval outputs.
 
 **Produces:** `exp_N/eval_results/` and `baseline_N/eval_results/` directories with per-instance `*_output.json` files.
 
