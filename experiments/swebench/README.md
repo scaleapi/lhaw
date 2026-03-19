@@ -4,36 +4,27 @@ End-to-end pipeline for generating, running, evaluating, and classifying undersp
 
 ## Setup
 
+Follow the environment setup in the [root README](../../README.md#setup), then activate and install SWE-bench-specific dependencies:
+
 ```bash
-cd lhaw
-
-# Python 3.11+ environment (conda or venv)
-conda create -n lhaw311 python=3.11 -y && conda activate lhaw311
-# OR: python3.11 -m venv .venv311 && source .venv311/bin/activate
-
-python -m pip install -r requirements.txt
+source .venv/bin/activate
 
 # SWE-bench Pro + SWE-agent (submodules)
+git submodule sync
 git submodule update --init swebenchpro/SWE-bench_Pro-os
 cd swebenchpro/SWE-bench_Pro-os && git submodule update --init SWE-agent
 
 # Switch SWE-agent to ask_user fork branch
 cd SWE-agent
-git remote add fork https://github.com/yash-scaleai/SWE-agent.git
-git fetch fork yash/ask-user-host-interception
-git checkout -b yash/ask-user-host-interception fork/yash/ask-user-host-interception
+git fetch origin
+git checkout -b lhaw/ask-user-tool origin/lhaw/ask-user-tool
 cd ../../..
 
-# Install SWE-agent (requires Python >=3.11)
-# Use python -m pip to ensure the conda env's pip is used
-python -m pip install -e swebenchpro/SWE-bench_Pro-os/SWE-agent
+# Install SWE-agent
+uv pip install -e swebenchpro/SWE-bench_Pro-os/SWE-agent
 
 # Modal auth (for container deployment)
 modal token new
-
-# Environment variables (add to .env — see .env.example)
-export LLM_API_KEY="your-api-key"
-# export LLM_BASE_URL="https://your-litellm-proxy-url"  # optional, for LiteLLM proxy
 ```
 
 Source `.env` before every session:
