@@ -7,6 +7,7 @@ End-to-end pipeline for generating, running, evaluating, and classifying undersp
 Follow the environment setup in the [root README](../../README.md#setup), then activate and install SWE-bench-specific dependencies:
 
 ```bash
+# In LHAW root
 source .venv/bin/activate
 
 # SWE-bench Pro + SWE-agent (submodules)
@@ -40,7 +41,7 @@ Run baseline SWE-agent on original tasks and export `.traj` files for grounded s
 Mirrors TAC step 1 (`tac.sh` + `export_tac_golden_trajectories.py`).
 Results are written to `baseline_N/` directories (not `exp_N/`) so they coexist with Stage 3's underspec trials in the same directory — no copying needed.
 
-See `run_swebench_example.sh` step 1 for the full commands.
+See `bash run_swebench_example.sh` step 1 for the full commands.
 
 **Produces:**
 - `baseline_1/`, `baseline_2/`, `baseline_3/` — baseline trial results (preds.json, trajectories)
