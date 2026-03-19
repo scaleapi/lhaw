@@ -5,12 +5,7 @@
 #
 # Mirrors run_tac_example.sh for the SWE-Bench Pro pipeline.
 #
-# Prerequisites:
-#   - conda activate lhaw311 (Python 3.11+)
-#   - python -m pip install -e swebenchpro/SWE-bench_Pro-os/SWE-agent
-#   - modal token new (Modal auth for container orchestration)
-#   - LLM_API_KEY and LLM_BASE_URL set (or OPENAI_API_KEY fallback)
-#   - source .env
+# Prerequisites: Refer to the setup instructions in experiments/swebench/README.md
 #
 # Task selection:
 #   BASELINE_MODELS controls which models run baselines. The paper required
