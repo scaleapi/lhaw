@@ -4,36 +4,28 @@ End-to-end pipeline for generating, running, evaluating, and classifying undersp
 
 ## Setup
 
+Follow the environment setup in the [root README](../../README.md#setup), then activate and install SWE-bench-specific dependencies:
+
 ```bash
-cd lhaw
-
-# Python 3.11+ environment (conda or venv)
-conda create -n lhaw311 python=3.11 -y && conda activate lhaw311
-# OR: python3.11 -m venv .venv311 && source .venv311/bin/activate
-
-python -m pip install -r requirements.txt
+# In LHAW root
+source .venv/bin/activate
 
 # SWE-bench Pro + SWE-agent (submodules)
+git submodule sync
 git submodule update --init swebenchpro/SWE-bench_Pro-os
 cd swebenchpro/SWE-bench_Pro-os && git submodule update --init SWE-agent
 
 # Switch SWE-agent to ask_user fork branch
 cd SWE-agent
-git remote add fork https://github.com/yash-scaleai/SWE-agent.git
-git fetch fork yash/ask-user-host-interception
-git checkout -b yash/ask-user-host-interception fork/yash/ask-user-host-interception
+git fetch origin
+git checkout -b lhaw/ask-user-tool origin/lhaw/ask-user-tool
 cd ../../..
 
-# Install SWE-agent (requires Python >=3.11)
-# Use python -m pip to ensure the conda env's pip is used
-python -m pip install -e swebenchpro/SWE-bench_Pro-os/SWE-agent
+# Install SWE-agent
+uv pip install -e swebenchpro/SWE-bench_Pro-os/SWE-agent
 
 # Modal auth (for container deployment)
 modal token new
-
-# Environment variables (add to .env — see .env.example)
-export LLM_API_KEY="your-api-key"
-# export LLM_BASE_URL="https://your-litellm-proxy-url"  # optional, for LiteLLM proxy
 ```
 
 Source `.env` before every session:
@@ -49,7 +41,7 @@ Run baseline SWE-agent on original tasks and export `.traj` files for grounded s
 Mirrors TAC step 1 (`tac.sh` + `export_tac_golden_trajectories.py`).
 Results are written to `baseline_N/` directories (not `exp_N/`) so they coexist with Stage 3's underspec trials in the same directory — no copying needed.
 
-See `run_swebench_example.sh` step 1 for the full commands.
+See `bash run_swebench_example.sh` step 1 for the full commands.
 
 **Produces:**
 - `baseline_1/`, `baseline_2/`, `baseline_3/` — baseline trial results (preds.json, trajectories)
@@ -95,6 +87,7 @@ python task_completion_swebench.py --run \
 ### Stage 4: Evaluate predictions
 
 Runs SWE-bench Pro Docker evaluation on all patches. Handles both variant (`exp_N/`) and baseline (`baseline_N/`) predictions.
+The source dataset file `swe_bench_pro_full.csv` is downloaded automatically on first evaluation if it is missing.
 
 ```bash
 # Evaluate only (no classification)
@@ -108,6 +101,8 @@ python scripts/process_swebench_underspec.py \
     --exp-dir experiments/swebench/runs/run_trial_v1_<timestamp> \
     --run-eval --dockerhub-username jefzda --judge
 ```
+
+If `--eval-only` fails for any trial or baseline, the command now exits non-zero so downstream summary steps do not continue with missing eval outputs.
 
 **Produces:** `exp_N/eval_results/` and `baseline_N/eval_results/` directories with per-instance `*_output.json` files.
 

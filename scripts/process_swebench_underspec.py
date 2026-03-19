@@ -377,6 +377,7 @@ def run_evaluation(
     redo: bool = False,
 ) -> bool:
     """Run SWE-bench Pro evaluation on a trial's predictions."""
+    ensure_swebench_csv()
     preds_path = exp_dir / f"exp_{trial_num}" / "preds.json"
     eval_output_dir = exp_dir / f"exp_{trial_num}" / "eval_results"
 
@@ -456,6 +457,7 @@ def run_baseline_evaluation(
     Baselines use original instance IDs (no variant suffix stripping needed).
     Output goes to baseline_N/eval_results/ with prefix 'baselineN'.
     """
+    ensure_swebench_csv()
     baseline_dir = exp_dir / f"baseline_{baseline_num}"
     preds_path = baseline_dir / "preds.json"
     eval_output_dir = baseline_dir / "eval_results"
@@ -1065,6 +1067,7 @@ def main():
         if not args.dockerhub_username:
             print("Error: --dockerhub-username required with --run-eval")
             sys.exit(1)
+        ensure_swebench_csv()
         # Detect num trials from exp_N dirs (only match exp_1, exp_2, etc.)
         num_trials = len(
             [
@@ -1080,15 +1083,29 @@ def main():
             print(f"Error: No exp_* or baseline_* directories found in {exp_dir}")
             sys.exit(1)
 
+        eval_failures = []
         if num_trials > 0:
             print(f"Running variant evaluation ({num_trials} trials)")
             for trial_num in range(1, num_trials + 1):
-                run_evaluation(exp_dir, trial_num, args.dockerhub_username, args.num_workers)
+                if not run_evaluation(
+                    exp_dir, trial_num, args.dockerhub_username, args.num_workers
+                ):
+                    eval_failures.append(f"exp_{trial_num}")
 
         if baseline_nums:
             print(f"Running baseline evaluation ({len(baseline_nums)} baselines)")
             for bnum in baseline_nums:
-                run_baseline_evaluation(exp_dir, bnum, args.dockerhub_username, args.num_workers)
+                if not run_baseline_evaluation(
+                    exp_dir, bnum, args.dockerhub_username, args.num_workers
+                ):
+                    eval_failures.append(f"baseline_{bnum}")
+
+        if eval_failures:
+            print(
+                f"\nEvaluation failed for: {', '.join(eval_failures)}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
 
         print("\nEvaluation complete.")
         sys.exit(0)
