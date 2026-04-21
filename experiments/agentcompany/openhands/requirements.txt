@@ -86,7 +86,7 @@ kiwisolver==1.4.7
 lark==1.2.2
 llvmlite==0.43.0
 lm-format-enforcer==0.10.6
-lxml==5.4.0
+lxml==6.1.0
 MarkupSafe==2.1.5
 matplotlib==3.10.0
 matplotlib-inline==0.1.7
